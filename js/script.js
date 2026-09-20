@@ -107,9 +107,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
     navLinks.forEach(link => {
         const linkPath = new URL(link.href).pathname;
-        if (currentLocation === linkPath || 
-            (currentLocation.endsWith('/') && linkPath.endsWith('index.html')) ||
-            (currentLocation.endsWith('/haven-wolf/') && linkPath.endsWith('/haven-wolf/'))) {
+        const normalizedCurrent = currentLocation.replace(/\/+$/, '') || '/';
+        const normalizedLink = linkPath.replace(/\/+$/, '') || '/';
+        const currentFile = normalizedCurrent.split('/').pop() || 'index.html';
+        const linkFile = normalizedLink.split('/').pop() || 'index.html';
+
+        if (normalizedCurrent === normalizedLink || currentFile === linkFile) {
             link.classList.add('active');
         }
     });
